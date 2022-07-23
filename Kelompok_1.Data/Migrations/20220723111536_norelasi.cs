@@ -4,7 +4,7 @@
 
 namespace Kelompok_1.Data.Migrations
 {
-    public partial class membuat_database : Migration
+    public partial class norelasi : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,9 @@ namespace Kelompok_1.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProdukId = table.Column<int>(type: "int", nullable: false),
                     Jumlah = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProdukId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,6 +34,20 @@ namespace Kelompok_1.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Kategoris", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transaksis",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    CartId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transaksis", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,17 +76,11 @@ namespace Kelompok_1.Data.Migrations
                     Nama = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Harga = table.Column<int>(type: "int", nullable: false),
                     Stock = table.Column<int>(type: "int", nullable: false),
-                    KategoriId = table.Column<int>(type: "int", nullable: false),
-                    CartId = table.Column<int>(type: "int", nullable: true)
+                    KategoriId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Produks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Produks_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Produks_Kategoris_KategoriId",
                         column: x => x.KategoriId,
@@ -81,56 +89,17 @@ namespace Kelompok_1.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Transaksis",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CartId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transaksis", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Transaksis_Carts_CartId",
-                        column: x => x.CartId,
-                        principalTable: "Carts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Transaksis_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Produks_CartId",
-                table: "Produks",
-                column: "CartId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Produks_KategoriId",
                 table: "Produks",
                 column: "KategoriId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transaksis_CartId",
-                table: "Transaksis",
-                column: "CartId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transaksis_UserId",
-                table: "Transaksis",
-                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Carts");
+
             migrationBuilder.DropTable(
                 name: "Produks");
 
@@ -138,13 +107,10 @@ namespace Kelompok_1.Data.Migrations
                 name: "Transaksis");
 
             migrationBuilder.DropTable(
-                name: "Kategoris");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
-
-            migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Kategoris");
         }
     }
 }

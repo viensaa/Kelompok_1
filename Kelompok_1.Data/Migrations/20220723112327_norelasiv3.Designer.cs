@@ -4,6 +4,7 @@ using Kelompok_1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kelompok_1.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220723112327_norelasiv3")]
+    partial class norelasiv3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,8 +115,6 @@ namespace Kelompok_1.Data.Migrations
                     b.HasIndex("CartId")
                         .IsUnique();
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Transaksis");
                 });
 
@@ -179,14 +179,6 @@ namespace Kelompok_1.Data.Migrations
                         .HasForeignKey("Kelompok_1.Domain.Transaksi", "CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Kelompok_1.Domain.User", "User")
-                        .WithMany("Transaksis")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Kelompok_1.Domain.Cart", b =>
@@ -203,11 +195,6 @@ namespace Kelompok_1.Data.Migrations
             modelBuilder.Entity("Kelompok_1.Domain.Produk", b =>
                 {
                     b.Navigation("carts");
-                });
-
-            modelBuilder.Entity("Kelompok_1.Domain.User", b =>
-                {
-                    b.Navigation("Transaksis");
                 });
 #pragma warning restore 612, 618
         }

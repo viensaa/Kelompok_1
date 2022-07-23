@@ -14,7 +14,8 @@ namespace Kelompok_1.Domain
         public int Stock { get; set; }
         public Kategori Kategori { get; set; }
         public int KategoriId{ get; set; }
-        List<Cart> Carts { get; set; }
+        public List<Cart> carts { get; set; }
+        
 
     }
 }

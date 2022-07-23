@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kelompok_1.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220722054631_fixingdatabase")]
-    partial class fixingdatabase
+    [Migration("20220723112511_norelasiv4")]
+    partial class norelasiv4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,8 +43,7 @@ namespace Kelompok_1.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("ProdukId");
 
                     b.ToTable("Carts");
                 });
@@ -74,9 +73,6 @@ namespace Kelompok_1.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Harga")
                         .HasColumnType("int");
 
@@ -91,8 +87,6 @@ namespace Kelompok_1.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("KategoriId");
 
@@ -109,6 +103,9 @@ namespace Kelompok_1.Data.Migrations
 
                     b.Property<int>("CartId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Tanggal")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -157,19 +154,17 @@ namespace Kelompok_1.Data.Migrations
 
             modelBuilder.Entity("Kelompok_1.Domain.Cart", b =>
                 {
-                    b.HasOne("Kelompok_1.Domain.User", null)
-                        .WithOne("Cart")
-                        .HasForeignKey("Kelompok_1.Domain.Cart", "UserId")
+                    b.HasOne("Kelompok_1.Domain.Produk", "Produk")
+                        .WithMany("carts")
+                        .HasForeignKey("ProdukId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Produk");
                 });
 
             modelBuilder.Entity("Kelompok_1.Domain.Produk", b =>
                 {
-                    b.HasOne("Kelompok_1.Domain.Cart", null)
-                        .WithMany("Produks")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("Kelompok_1.Domain.Kategori", "Kategori")
                         .WithMany("Produks")
                         .HasForeignKey("KategoriId")
@@ -181,7 +176,7 @@ namespace Kelompok_1.Data.Migrations
 
             modelBuilder.Entity("Kelompok_1.Domain.Transaksi", b =>
                 {
-                    b.HasOne("Kelompok_1.Domain.Cart", "Cart")
+                    b.HasOne("Kelompok_1.Domain.Cart", null)
                         .WithOne("Transaksi")
                         .HasForeignKey("Kelompok_1.Domain.Transaksi", "CartId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -193,15 +188,11 @@ namespace Kelompok_1.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cart");
-
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Kelompok_1.Domain.Cart", b =>
                 {
-                    b.Navigation("Produks");
-
                     b.Navigation("Transaksi")
                         .IsRequired();
                 });
@@ -211,11 +202,13 @@ namespace Kelompok_1.Data.Migrations
                     b.Navigation("Produks");
                 });
 
+            modelBuilder.Entity("Kelompok_1.Domain.Produk", b =>
+                {
+                    b.Navigation("carts");
+                });
+
             modelBuilder.Entity("Kelompok_1.Domain.User", b =>
                 {
-                    b.Navigation("Cart")
-                        .IsRequired();
-
                     b.Navigation("Transaksis");
                 });
 #pragma warning restore 612, 618
