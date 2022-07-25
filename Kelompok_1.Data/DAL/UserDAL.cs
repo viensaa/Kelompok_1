@@ -60,6 +60,13 @@ namespace Kelompok_1.Data.DAL
             return results;
         }
 
+        //belum sesaui harapan
+        public async Task<IEnumerable<User>> GetTransaksiAll()
+        {
+            var results = await _context.Users.Include(t => t.Transaksis).ToListAsync();
+            return results;
+        }
+
         public async Task<User> Insert(User obj)
         {
             try

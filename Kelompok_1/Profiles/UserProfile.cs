@@ -11,6 +11,12 @@ namespace Kelompok_1.Profiles
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
             CreateMap<UserCreateDTO, User>();
+
+            //mapping untuk detail transaksi
+
+            CreateMap<User, UserTransaksiDTO>();
+            CreateMap<Cart, UserTransaksiDTO>();
+            CreateMap<Transaksi, TransaksiDetailDTO>();
         }
     }
 }

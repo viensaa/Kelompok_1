@@ -100,5 +100,14 @@ namespace Kelompok_1.Controllers
             }
         }
 
+        //menampilan seluruh transaksi user(belum seusai harapan)
+        [HttpGet("Menampilkan Transaksi User")]
+        public async Task<IEnumerable<UserTransaksiDTO>> GetAllTraksaksiByUser()
+        {
+            var results = await _userDAL.GetTransaksiAll();
+            var ReadData = _mapper.Map<IEnumerable<UserTransaksiDTO>>(results);
+            return ReadData;
+        }
+
     }
 }
