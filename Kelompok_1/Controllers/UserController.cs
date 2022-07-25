@@ -85,6 +85,20 @@ namespace Kelompok_1.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        [HttpDelete("Menghapus User")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                await _userDAL.DeleteById(id);
+                return Ok("Data Berhasil di Hapus");
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
 
     }
 }

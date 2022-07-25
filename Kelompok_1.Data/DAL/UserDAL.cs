@@ -18,9 +18,23 @@ namespace Kelompok_1.Data.DAL
             _context = context;
         }
 
-        public Task DeleteById(int id)
+        public async Task DeleteById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var DeleteUser = await _context.Users.FirstOrDefaultAsync(s => s.Id == id);
+                if (DeleteUser == null)
+                    throw new Exception($"Data dengan ID {id} tidak di temukan");
+
+                _context.Users.Remove(DeleteUser);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<User>> GetAll()
