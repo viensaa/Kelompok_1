@@ -16,6 +16,6 @@ namespace Kelompok_1.Domain
         public string password { get; set; }
         //public Cart Cart { get; set; }
         public List<Transaksi> Transaksis { get; set; } = new List<Transaksi>();
-
+       
     }
 }
