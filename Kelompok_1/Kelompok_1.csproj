@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Folder Include="DTO\" />
-    <Folder Include="Profile\" />
+    <Folder Include="Profiles\" />
   </ItemGroup>
 
 </Project>
