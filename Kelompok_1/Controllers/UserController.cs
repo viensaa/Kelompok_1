@@ -2,8 +2,12 @@
 using Kelompok_1.Data.Interface;
 using Kelompok_1.Domain;
 using Kelompok_1.DTO;
+using Kelompok_1.Helpers;
+using Kelompok_1.Models;
+using Kelompok_1.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using User = Kelompok_1.Domain.User;
 
 namespace Kelompok_1.Controllers
 {
@@ -13,14 +17,17 @@ namespace Kelompok_1.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUser _userDAL;
+        private readonly IUserService _userService;
 
-        public UserController(IMapper mapper,IUser UserDAL)
+        public UserController(IUserService userService,IMapper mapper,IUser UserDAL)
         {
             _mapper = mapper;
             _userDAL = UserDAL;
+            _userService = userService;
         }
 
         //menampilakn seluruh data
+        [Authorize]
         [HttpGet("Menampilkan Seluruh Data User")]
         public async Task<IEnumerable<UserDTO>> Get()
         {
@@ -30,6 +37,7 @@ namespace Kelompok_1.Controllers
         }
 
         //pencarian data berdasarkan Id
+        //[Authorize]
         [HttpGet("Pencarian By Id")]
         public async Task<UserDTO> GetById(int id)
         {
@@ -41,6 +49,7 @@ namespace Kelompok_1.Controllers
         }
 
         //pencarian data berdasarkan Nama
+        //[Authorize]
         [HttpGet("Pencarian By Name")]
         public async Task<IEnumerable<UserDTO>> GetByName(string name)
         {
@@ -72,6 +81,7 @@ namespace Kelompok_1.Controllers
 
         //fitur untuk mengubah Data Pengguna
         [HttpPut("Mengubah Data Pengguna")]
+        //[Authorize]
         public async Task<ActionResult>Put(UserDTO userDTO)
         {
             try
@@ -85,7 +95,9 @@ namespace Kelompok_1.Controllers
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpDelete("Menghapus User")]
+        //[Authorize]
         public async Task<ActionResult> DeleteUser(int id)
         {
             try
@@ -102,11 +114,24 @@ namespace Kelompok_1.Controllers
 
         //menampilan seluruh transaksi user(belum seusai harapan)
         [HttpGet("Menampilkan Transaksi User")]
+        //[Authorize]
         public async Task<IEnumerable<UserTransaksiDTO>> GetAllTraksaksiByUser()
         {
             var results = await _userDAL.GetTransaksiAll();
             var ReadData = _mapper.Map<IEnumerable<UserTransaksiDTO>>(results);
             return ReadData;
+        }
+
+        //LOGIN
+        [HttpPost("Login")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _userService.Login(model);
+
+            if (response == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(response);
         }
 
     }
