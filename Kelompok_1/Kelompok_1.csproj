@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+
     <ProjectReference Include="..\Kelompok_1.Data\Kelompok_1.Data.csproj" />
+
   </ItemGroup>
 
 </Project>
