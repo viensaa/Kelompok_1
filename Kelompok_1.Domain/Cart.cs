@@ -13,6 +13,7 @@ namespace Kelompok_1.Domain
         public int Jumlah { get; set; }
         public int UserId { get; set; }
         public int ProdukId { get; set; }
-        public Transaksi Transaksi { get; set; }        
+        public Transaksi Transaksi { get; set; }
+        
     }
 }

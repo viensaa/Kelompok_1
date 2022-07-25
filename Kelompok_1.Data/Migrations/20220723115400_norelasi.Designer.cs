@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kelompok_1.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220723112511_norelasiv4")]
-    partial class norelasiv4
+    [Migration("20220723115400_norelasi")]
+    partial class norelasi
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
