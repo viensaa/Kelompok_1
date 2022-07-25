@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-    <Folder Include="Profile\" />
+    <ProjectReference Include="..\Kelompok_1.Data\Kelompok_1.Data.csproj" />
+    <ProjectReference Include="..\Kelompok_1.Domain\Kelompok_1.Domain.csproj" />
   </ItemGroup>
 
 </Project>

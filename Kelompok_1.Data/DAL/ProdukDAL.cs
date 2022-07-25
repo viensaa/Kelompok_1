@@ -1,5 +1,6 @@
 ﻿using Kelompok_1.Data.Interface;
 using Kelompok_1.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,34 +11,80 @@ namespace Kelompok_1.Data.DAL
 {
     public class ProdukDAL : IProduk
     {
-        public Task DeleteById(int id)
+        private readonly DataContext _context;
+
+        public ProdukDAL(DataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }   
+        public async Task DeleteById(int id)
+        {
+            try
+            {
+                var deleteProduk = await _context.Produks.FirstOrDefaultAsync(s => s.Id == id);
+                if (deleteProduk == null)
+                    throw new Exception($"Data samurai dengan id {id} tidak ditemukan");
+                _context.Produks.Remove(deleteProduk);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
         }
 
-        public Task<IEnumerable<Produk>> GetAll()
+        public async Task<IEnumerable<Produk>> GetAll()
         {
-            throw new NotImplementedException();
+            var results = await _context.Produks.Include(k => k.Kategori).OrderBy(s => s.Nama).ToListAsync();
+            return results; ;
         }
 
-        public Task<Produk> GetById(int id)
+        public async Task<Produk> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Produks.FirstOrDefaultAsync(s => s.Id == id);
+            if (result == null) throw new Exception($"Data Produk dengan id {id} tidak ditemukan");
+            return result;
         }
 
-        public Task<IEnumerable<Produk>> GetByName(string name)
+        public async Task<IEnumerable<Produk>> GetByName(string name)
         {
-            throw new NotImplementedException();
+            var samurais = await _context.Produks.Where(s => s.Nama.Contains(name))
+                .OrderBy(s => s.Nama).ToListAsync();
+            return samurais;
         }
 
-        public Task<Produk> Insert(Produk obj)
+        public async Task<Produk> Insert(Produk obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Produks.Add(obj);
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
         }
 
-        public Task<Produk> Update(Produk obj)
+        public async Task<Produk> Update(Produk obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var updateProduk = await _context.Produks.FirstOrDefaultAsync(s => s.Id == obj.Id);
+                if (updateProduk == null)
+                    throw new Exception($"Data produk dengan id {obj.Id} tidak ditemukan");
+
+                updateProduk.Nama= obj.Nama;
+                updateProduk.Harga = obj.Harga;
+                updateProduk.Stock = obj.Stock;
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
         }
     }
 }

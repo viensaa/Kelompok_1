@@ -10,6 +10,11 @@ namespace Kelompok_1.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+
+        }
+
         //menambah tabel di database
         public DbSet<Produk> Produks { get; set; }
         public DbSet<Kategori> Kategoris { get; set; }
