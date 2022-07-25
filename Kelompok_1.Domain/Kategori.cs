@@ -10,6 +10,6 @@ namespace Kelompok_1.Domain
     {
         public int Id { get; set; }
         public string Nama { get; set; }
-        public List<Produk> Produks { get; set; }
+        public List<Produk> Produks { get; set; }     
     }
 }
