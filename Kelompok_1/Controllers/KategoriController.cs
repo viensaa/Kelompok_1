@@ -105,5 +105,49 @@ namespace Kelompok_1.Controllers
             }
             return kategoriReadDTOs;
         }
+
+        [HttpPost("KategoriWithProduk")]
+        public async Task<ActionResult> AddKategoriWithProduk(AddKateWithPr addKateWithPr)
+        {
+            try
+            {
+                var newSword = _mapper.Map<Kategori>(addKateWithPr);
+                var result = await _kategoriDAL.AddKategoriWithProduk(newSword);
+                var readDto = _mapper.Map<KatePrRead>(result);
+
+                return CreatedAtAction("Get", new { id = result.Id }, readDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+
+            }
+        }
+        [HttpGet("KategoriProduk")]
+
+        public async Task<IEnumerable<KatePrRead>> GetKategoriProduk(int page)
+        {
+            var result = await _kategoriDAL.GetKategoriProduk();
+            var kateDTO = _mapper.Map<IEnumerable<KatePrRead>>(result);
+            var pagination = kateDTO.Skip((page - 1) * 10).Take(10).ToList();
+            return pagination;
+        }
+        /*[HttpPost("Add Produk To Existing Kate")]
+        public async Task<ActionResult> AddKategoriExistingProduk(KategoriCreateToExistProdukDTO kategoriCreateToExistProdukDTO)
+        {
+            try
+            {
+
+                var newKate = _mapper.Map<Kategori>(kategoriCreateToExistProdukDTO);
+                var result = await _kategoriDAL.AddKategoriExistingProduk(newKate);
+                var readDTO = _mapper.Map<ProdukReadDTO>(result);
+
+                return CreatedAtAction("Get", new { id = result.Id }, readDTO);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }*/
     }
 }

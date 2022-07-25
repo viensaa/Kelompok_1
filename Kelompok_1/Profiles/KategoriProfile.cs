@@ -13,6 +13,24 @@ namespace Kelompok_1.Profiles
 
             CreateMap<KategoriCreateDTO, Kategori>();
 
+            CreateMap<Produk, ProdukCreateDTO>();
+
+            CreateMap<ProdukCreateDTO, Produk>();
+
+            CreateMap<KategoriCreateToExistProdukDTO, Kategori>();
+
+            CreateMap<AddKateWithPr, Kategori>();
+
+            CreateMap<Produk, ProdukReadDTO>();
+
+            CreateMap<Kategori, ProdukReadDTO>();
+
+            CreateMap<Kategori, KatePrRead>();
+
+            
+
+
+
         }
     }
 }

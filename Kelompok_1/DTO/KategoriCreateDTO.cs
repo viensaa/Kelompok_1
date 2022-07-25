@@ -3,5 +3,6 @@
     public class KategoriCreateDTO
     {
         public string Nama { get; set; }
+
     }
 }

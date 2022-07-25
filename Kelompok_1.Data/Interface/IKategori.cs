@@ -10,6 +10,9 @@ namespace Kelompok_1.Data.Interface
     public interface IKategori : ICrud<Kategori>
     {
         Task<IEnumerable<Kategori>> GetByName(string name);
+        Task<Kategori> AddKategoriExistingProduk(Kategori obj);
+        Task<Kategori> AddKategoriWithProduk(Kategori obj);
+        Task<IEnumerable<Kategori>> GetKategoriProduk();
 
     }
 }

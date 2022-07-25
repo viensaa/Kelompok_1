@@ -17,6 +17,37 @@ namespace Kelompok_1.Data.DAL
         {
             _context = context;
         }
+
+        public async Task<Kategori> AddKategoriExistingProduk(Kategori obj)
+        {
+            try
+            {
+                _context.Kategoris.Add(obj);
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"{ex.Message}");
+            }
+        }
+
+        public async Task<Kategori> AddKategoriWithProduk(Kategori obj)
+        {
+            try
+            {
+                _context.Kategoris.Add(obj);
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"{ex.Message}");
+            }
+        }
+
         public async Task DeleteById(int id)
         {
             try
@@ -54,6 +85,12 @@ namespace Kelompok_1.Data.DAL
             var kate = await _context.Kategoris.Where(e => e.Nama.Contains(name))
                 .OrderBy(s => s.Nama).ToListAsync();
             return kate;
+        }
+
+        public async Task<IEnumerable<Kategori>> GetKategoriProduk()
+        {
+            var result = await _context.Kategoris.Include(p => p.Produks).ToListAsync();
+            return result;
         }
 
         public async Task<Kategori> Insert(Kategori obj)
