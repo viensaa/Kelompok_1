@@ -29,9 +29,10 @@ namespace Kelompok_1.Data.DAL
             return results;
         }
 
-        public Task<User> GetById(int id)
+        public async Task<User> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+            return result;
         }
 
         public Task<IEnumerable<Produk>> GetByName(string name)
