@@ -37,7 +37,7 @@ namespace Kelompok_1.Controllers
         }
 
         //pencarian data berdasarkan Id
-        //[Authorize]
+        [Authorize]
         [HttpGet("Pencarian By Id")]
         public async Task<UserDTO> GetById(int id)
         {
@@ -49,7 +49,7 @@ namespace Kelompok_1.Controllers
         }
 
         //pencarian data berdasarkan Nama
-        //[Authorize]
+        [Authorize]
         [HttpGet("Pencarian By Name")]
         public async Task<IEnumerable<UserDTO>> GetByName(string name)
         {
@@ -80,8 +80,8 @@ namespace Kelompok_1.Controllers
         }
 
         //fitur untuk mengubah Data Pengguna
-        [HttpPut("Mengubah Data Pengguna")]
-        //[Authorize]
+        [Authorize]
+        [HttpPut("Mengubah Data Pengguna")]        
         public async Task<ActionResult>Put(UserDTO userDTO)
         {
             try
@@ -96,8 +96,8 @@ namespace Kelompok_1.Controllers
             }
         }
 
-        [HttpDelete("Menghapus User")]
-        //[Authorize]
+        [Authorize]
+        [HttpDelete("Menghapus User")]        
         public async Task<ActionResult> DeleteUser(int id)
         {
             try
@@ -113,8 +113,8 @@ namespace Kelompok_1.Controllers
         }
 
         //menampilan seluruh transaksi user(belum seusai harapan)
-        [HttpGet("Menampilkan Transaksi User")]
-        //[Authorize]
+        [Authorize]
+        [HttpGet("Menampilkan Transaksi User")]        
         public async Task<IEnumerable<UserTransaksiDTO>> GetAllTraksaksiByUser()
         {
             var results = await _userDAL.GetTransaksiAll();

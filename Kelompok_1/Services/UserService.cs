@@ -13,12 +13,17 @@ namespace Kelompok_1.Services
     {
         // AuthenticateResponse Authenticate(AuthenticateRequest model);
         //IEnumerable<User> GetAll();
-        //User GetById(int id);
+        User GetById(int id);
         AuthenticateResponse Login(AuthenticateRequest model);
     }
     public class UserService : IUserService
     {
-     
+        private List<User> _users = new List<User>
+        {
+
+            new User { Id = 1, Email = "", Password = "" }
+        };
+
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
 
@@ -53,6 +58,9 @@ namespace Kelompok_1.Services
             return new AuthenticateResponse(user, token);
         }
 
-
+        public User GetById(int id)
+        {
+            return _users.FirstOrDefault(x => x.Id == id);
+        }
     }
 }
