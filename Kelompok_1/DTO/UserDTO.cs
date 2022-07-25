@@ -7,6 +7,7 @@
         public string Alamat { get; set; }
         public int Telepon { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
 
     }
 }

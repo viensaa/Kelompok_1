@@ -61,9 +61,28 @@ namespace Kelompok_1.Data.DAL
             }
         }
 
-        public Task<User> Update(User obj)
+        public async Task<User> Update(User obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var FindData = await _context.Users.FirstOrDefaultAsync(u => u.Id == obj.Id);
+                if (FindData == null)
+                    throw new Exception("Data Tidak Ditemukan");
+
+                FindData.Nama = obj.Nama;
+                FindData.Alamat = obj.Alamat;
+                FindData.Telepon = obj.Telepon;
+                FindData.Email = obj.Email;
+                FindData.password = obj.password;
+                await _context.SaveChangesAsync();
+                return obj;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

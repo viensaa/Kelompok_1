@@ -70,5 +70,21 @@ namespace Kelompok_1.Controllers
             
         }
 
+        //fitur untuk mengubah Data Pengguna
+        [HttpPut("Mengubah Data Pengguna")]
+        public async Task<ActionResult>Put(UserDTO userDTO)
+        {
+            try
+            {
+                var updateUser = _mapper.Map<User>(userDTO);
+                var result = await _userDAL.Update(updateUser);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }
