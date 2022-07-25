@@ -9,6 +9,6 @@ namespace Kelompok_1.Data.Interface
 {
     public interface IUser : ICrud<User>
     {
-        Task<IEnumerable<Produk>> GetByName(string name);
+        Task<IEnumerable<User>> GetByName(string name);
     }
 }

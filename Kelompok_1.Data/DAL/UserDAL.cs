@@ -32,17 +32,33 @@ namespace Kelompok_1.Data.DAL
         public async Task<User> GetById(int id)
         {
             var result = await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+            if (result == null) throw new Exception($"Data Dengan Id:{id} Tidak Ditemukan");
+
+            
             return result;
         }
 
-        public Task<IEnumerable<Produk>> GetByName(string name)
+        public async Task<IEnumerable<User>> GetByName(string name)
         {
-            throw new NotImplementedException();
+            var results = await _context.Users.Where(u => u.Nama.Contains(name)).ToListAsync();           
+            if (results == null) throw new Exception($"Data Dengan Nama:{name} Tidak Ditemukan");
+
+            return results;
         }
 
-        public Task<User> Insert(User obj)
+        public async Task<User> Insert(User obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Users.Add(obj);
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public Task<User> Update(User obj)

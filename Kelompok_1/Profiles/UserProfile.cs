@@ -10,6 +10,7 @@ namespace Kelompok_1.Profiles
         {
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
+            CreateMap<UserCreateDTO, User>();
         }
     }
 }
