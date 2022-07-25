@@ -10,6 +10,15 @@ namespace Kelompok_1.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext()
+        {
+
+        }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+
+        }
+
         //menambah tabel di database
         public DbSet<Produk> Produks { get; set; }
         public DbSet<Kategori> Kategoris { get; set; }
@@ -20,7 +29,7 @@ namespace Kelompok_1.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Kelompok1");
+           //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Kelompok1");
         }
     }
 }
