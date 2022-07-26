@@ -10,6 +10,12 @@ namespace Kelompok_1.Data.DAL
 {
     public class ProdukDAL : IProduk
     {
+        private readonly DataContext _context;
+
+        public ProdukDAL(DataContext context)
+        {
+            _context = context;
+        }
         public Task DeleteById(int id)
         {
             throw new NotImplementedException();

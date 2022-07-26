@@ -23,12 +23,16 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //inject class DAL
 builder.Services.AddScoped<IUser, UserDAL>();
-
+builder.Services.AddScoped<IKategori, KategoriDAL>();
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // configure DI for application services
 builder.Services.AddScoped<IUserService, UserService>();
+
+
+
+
 
 
 var app = builder.Build();
