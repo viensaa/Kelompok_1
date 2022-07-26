@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using User = Kelompok_1.Domain.User;
 
 namespace Kelompok_1.Services
 {
@@ -18,11 +19,11 @@ namespace Kelompok_1.Services
     }
     public class UserService : IUserService
     {
-        private List<User> _users = new List<User>
-        {
+        //private List<User> _users = new List<User>
+        //{
 
-            new User { Id = 1, Email = "", Password = "" }
-        };
+        //    new User { Id = 2, Email = " ", password = " " }
+        //};
 
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
@@ -60,7 +61,8 @@ namespace Kelompok_1.Services
 
         public User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.Id == id);
+            var userLogin = _context.Users.FirstOrDefault(x => x.Id == id);
+            return userLogin;
         }
     }
 }
