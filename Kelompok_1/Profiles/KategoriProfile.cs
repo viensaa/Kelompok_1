@@ -9,7 +9,7 @@ namespace Kelompok_1.Profiles
         public KategoriProfile()
         {
             CreateMap<Kategori, KategoriReadDTO>();
-           // CreateMap<KategoriReadDTO, Kategori>();
+            //CreateMap<KategoriReadDTO, Kategori>();
 
             CreateMap<KategoriCreateDTO, Kategori>();
 

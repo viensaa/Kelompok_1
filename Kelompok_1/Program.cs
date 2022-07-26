@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 
 //menambahkan konfigurasi EF
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("SamuraiConnection")).EnableSensitiveDataLogging());
+    builder.Configuration.GetConnectionString("EcommerceConnection")).EnableSensitiveDataLogging());
 
 //menambahkan automapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
