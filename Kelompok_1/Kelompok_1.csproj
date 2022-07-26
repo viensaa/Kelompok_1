@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,6 +16,8 @@
   <ItemGroup>
 
     <ProjectReference Include="..\Kelompok_1.Data\Kelompok_1.Data.csproj" />
+
+    <ProjectReference Include="..\Kelompok_1.Domain\Kelompok_1.Domain.csproj" />
 
   </ItemGroup>
 
