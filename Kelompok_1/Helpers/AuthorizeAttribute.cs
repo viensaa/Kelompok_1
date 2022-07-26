@@ -2,6 +2,7 @@
 using Kelompok_1.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using User = Kelompok_1.Domain.User;
 
 namespace Kelompok_1.Helpers
 {
