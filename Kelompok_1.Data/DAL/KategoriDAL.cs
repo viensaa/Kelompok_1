@@ -21,14 +21,13 @@ namespace Kelompok_1.Data.DAL
         public async Task<Kategori> AddKategoriExistingProduk(Kategori obj)
         {
             try
-            {
+            {   
                 _context.Kategoris.Add(obj);
                 await _context.SaveChangesAsync();
                 return obj;
             }
             catch (Exception ex)
             {
-
                 throw new Exception($"{ex.Message}");
             }
         }
@@ -52,10 +51,10 @@ namespace Kelompok_1.Data.DAL
         {
             try
             {
-                var element = await _context.Kategoris.FirstOrDefaultAsync(e => e.Id == id);
-                if (element == null)
+                var kate= await _context.Kategoris.FirstOrDefaultAsync(e => e.Id == id);
+                if (kate == null)
                     throw new Exception($"Data dengan id {id} tidak ditemukan");
-                _context.Kategoris.Remove(element);
+                _context.Kategoris.Remove(kate);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
