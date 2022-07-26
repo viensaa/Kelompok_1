@@ -11,22 +11,26 @@ namespace Kelompok_1.Controllers
     [ApiController]
     public class ProdukController : ControllerBase
     {
-        private IProduk _produkDAL;
+        private readonly IProduk _produkDAL;
         private readonly IMapper _mapper;
+        private readonly IKategori _kategoriDAL;
 
-        public ProdukController(IProduk produkDAL,IMapper mapper)
+        public ProdukController(IProduk produkDAL,IMapper mapper, IKategori kategoriDAL)
         {
             _produkDAL = produkDAL;
             _mapper = mapper;
+            _kategoriDAL = kategoriDAL;
 
         }
 
         [HttpGet]
 
-        public async Task<IEnumerable<ProdukReadDTO>> Get()
+        public async Task<IEnumerable<ProdukReadDTO>> GetAll(int page)
         {
-            var results = await _produkDAL.GetAll();
+            var results = await _produkDAL.GetAll(page);
             var produkDTO = _mapper.Map<IEnumerable<ProdukReadDTO>>(results);
+
+
 
             return produkDTO;
         }
@@ -45,8 +49,28 @@ namespace Kelompok_1.Controllers
         [HttpGet("ByName")]
         public async Task<IEnumerable<ProdukReadDTO>> GetByName(string name)
         {
-            List<ProdukReadDTO> produkDtos = new List<ProdukReadDTO>();
             var results = await _produkDAL.GetByName(name);
+            if (results == null) throw new Exception($"data {name} tidak ditemukan");
+            var produkDtos = _mapper.Map<IEnumerable<ProdukReadDTO>>(results);
+   
+            return produkDtos;
+        }
+
+        [HttpGet("ByKategori")]
+        public async Task<IEnumerable<GetProdukByKategoriDTO>> GetByKategori(string kategori)
+        {
+            var results = await _produkDAL.GetByKategori(kategori);
+            if (results == null) throw new Exception($"data kategori {kategori} tidak ditemukan");
+            var produkDTO = _mapper.Map<IEnumerable<GetProdukByKategoriDTO>>(results);
+
+            return produkDTO;
+        }
+
+        [HttpGet("ByHarga")]
+        public async Task<IEnumerable<ProdukReadDTO>> GetByHarga(int harga)
+        {
+            List<ProdukReadDTO> produkDtos = new List<ProdukReadDTO>();
+            var results = await _produkDAL.GetByHarga(harga);
             foreach (var result in results)
             {
                 produkDtos.Add(new ProdukReadDTO

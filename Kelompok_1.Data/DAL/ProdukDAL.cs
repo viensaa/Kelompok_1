@@ -33,10 +33,30 @@ namespace Kelompok_1.Data.DAL
             }
         }
 
-        public async Task<IEnumerable<Produk>> GetAll()
+        public async Task<IEnumerable<Produk>> GetAll(int page)
         {
-            var results = await _context.Produks.Include(k => k.Kategori).OrderBy(s => s.Nama).ToListAsync();
+            var pageResults = 3f;
+            var pageCount = Math.Ceiling(_context.Produks.Count() / pageResults);
+
+            var results = await _context.Produks.Include(k => k.Kategori).OrderBy(s => s.Id)
+                .Skip((page - 1) * (int)pageResults)
+                .Take((int)pageResults)
+                .ToListAsync();
+
             return results; ;
+   
+        }
+
+        public Task<IEnumerable<Produk>> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Produk>> GetByHarga(int harga)
+        {
+            var produks = await _context.Produks.Include(k => k.Kategori).Where(s => s.Harga == harga)
+                .OrderBy(s => s.Nama).ToListAsync();
+            return produks;
         }
 
         public async Task<Produk> GetById(int id)
@@ -46,11 +66,18 @@ namespace Kelompok_1.Data.DAL
             return result;
         }
 
+        public async Task<IEnumerable<Produk>> GetByKategori(string kategori)
+        {
+            var produks = await _context.Produks.Include(k => k.Kategori).Where(s => s.Kategori.Nama.Contains(kategori))
+                .OrderBy(s => s.Nama).ToListAsync();
+            return produks;
+        }
+
         public async Task<IEnumerable<Produk>> GetByName(string name)
         {
-            var samurais = await _context.Produks.Where(s => s.Nama.Contains(name))
+            var produks = await _context.Produks.Include(k => k.Kategori).Where(s => s.Nama.Contains(name))
                 .OrderBy(s => s.Nama).ToListAsync();
-            return samurais;
+            return produks;
         }
 
         public async Task<Produk> Insert(Produk obj)
@@ -86,5 +113,7 @@ namespace Kelompok_1.Data.DAL
                 throw new Exception($"{ex.Message}");
             }
         }
+
+
     }
 }
