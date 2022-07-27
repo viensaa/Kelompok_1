@@ -1,5 +1,6 @@
 ﻿using Kelompok_1.Data.Interface;
 using Kelompok_1.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,35 @@ namespace Kelompok_1.Data.DAL
         public ProdukDAL(DataContext context)
         {
             _context = context;
-        }
-        public Task DeleteById(int id)
+        }   
+        public async Task DeleteById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var deleteProduk = await _context.Produks.FirstOrDefaultAsync(s => s.Id == id);
+                if (deleteProduk == null)
+                    throw new Exception($"Data samurai dengan id {id} tidak ditemukan");
+                _context.Produks.Remove(deleteProduk);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+        }
+
+        public async Task<IEnumerable<Produk>> GetAll(int page)
+        {
+            var pageResults = 3f;
+            var pageCount = Math.Ceiling(_context.Produks.Count() / pageResults);
+
+            var results = await _context.Produks.Include(k => k.Kategori).OrderBy(s => s.Id)
+                .Skip((page - 1) * (int)pageResults)
+                .Take((int)pageResults)
+                .ToListAsync();
+
+            return results; ;
+   
         }
 
         public Task<IEnumerable<Produk>> GetAll()
@@ -26,24 +52,68 @@ namespace Kelompok_1.Data.DAL
             throw new NotImplementedException();
         }
 
-        public Task<Produk> GetById(int id)
+        public async Task<IEnumerable<Produk>> GetByHarga(int harga)
         {
-            throw new NotImplementedException();
+            var produks = await _context.Produks.Include(k => k.Kategori).Where(s => s.Harga == harga)
+                .OrderBy(s => s.Nama).ToListAsync();
+            return produks;
         }
 
-        public Task<IEnumerable<Produk>> GetByName(string name)
+        public async Task<Produk> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Produks.FirstOrDefaultAsync(s => s.Id == id);
+            if (result == null) throw new Exception($"Data Produk dengan id {id} tidak ditemukan");
+            return result;
         }
 
-        public Task<Produk> Insert(Produk obj)
+        public async Task<IEnumerable<Produk>> GetByKategori(string kategori)
         {
-            throw new NotImplementedException();
+            var produks = await _context.Produks.Include(k => k.Kategori).Where(s => s.Kategori.Nama.Contains(kategori))
+                .OrderBy(s => s.Nama).ToListAsync();
+            return produks;
         }
 
-        public Task<Produk> Update(Produk obj)
+        public async Task<IEnumerable<Produk>> GetByName(string name)
         {
-            throw new NotImplementedException();
+            var produks = await _context.Produks.Include(k => k.Kategori).Where(s => s.Nama.Contains(name))
+                .OrderBy(s => s.Nama).ToListAsync();
+            return produks;
         }
+
+        public async Task<Produk> Insert(Produk obj)
+        {
+            try
+            {
+                _context.Produks.Add(obj);
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+        }
+
+        public async Task<Produk> Update(Produk obj)
+        {
+            try
+            {
+                var updateProduk = await _context.Produks.FirstOrDefaultAsync(s => s.Id == obj.Id);
+                if (updateProduk == null)
+                    throw new Exception($"Data produk dengan id {obj.Id} tidak ditemukan");
+
+                updateProduk.Nama= obj.Nama;
+                updateProduk.Harga = obj.Harga;
+                updateProduk.Stock = obj.Stock;
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
+        }
+
+
     }
 }

@@ -27,7 +27,7 @@ namespace Kelompok_1.Profiles
 
             CreateMap<Kategori, KatePrRead>();
 
-            
+
 
 
 
