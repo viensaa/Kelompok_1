@@ -35,7 +35,7 @@ namespace Kelompok_1.Data.DAL
 
         public async Task<IEnumerable<Produk>> GetAll(int page)
         {
-            var pageResults = 3f;
+            var pageResults = 20f;
             var pageCount = Math.Ceiling(_context.Produks.Count() / pageResults);
 
             var results = await _context.Produks.Include(k => k.Kategori).OrderBy(s => s.Id)
