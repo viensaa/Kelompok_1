@@ -17,9 +17,18 @@ namespace Kelompok_1.Data.DAL
         {
             _context = context;
         }
-        public Task<Transaksi> AddExistingCartToTransaki(Transaksi obj)
+        public async Task<Transaksi> AddExistingCartToTransaki(Transaksi obj)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Transaksis.Add(obj);
+                await _context.SaveChangesAsync();
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}");
+            }
         }
 
         public Task DeleteById(int id)

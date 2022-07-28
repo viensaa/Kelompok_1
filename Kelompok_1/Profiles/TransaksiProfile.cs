@@ -19,6 +19,7 @@ namespace Kelompok_1.Profiles
             CreateMap<CartProdukReadDTO, Produk>();
             CreateMap<User, UserCartDTO>();
             CreateMap<UserCartDTO, User>();
+            CreateMap<AddExistingCartToTransaksiDTO, Transaksi>();
 
             //CreateMap<TransaksiReadDTO, ProdukCartDTO>();
             //CreateMap<Transaksi, ProdukCartDTO>();
