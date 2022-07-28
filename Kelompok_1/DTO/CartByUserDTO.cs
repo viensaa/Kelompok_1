@@ -2,8 +2,9 @@
 {
     public class CartByUserDTO
     {
-        public string Nama { get; set; }
-        public List<ProdukCartDTO> Produk { get; set; }
+        public int Id { get; set; }
+        public ProdukCartDTO Produk { get; set; }
+        public int Jumlah { get; set; }
         //public int Jumlah { get; set; }
     }
 }

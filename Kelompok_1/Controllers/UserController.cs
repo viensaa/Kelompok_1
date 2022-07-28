@@ -122,15 +122,15 @@ namespace Kelompok_1.Controllers
             return ReadData;
         }
 
-        //menampilan seluruh Cart user
+        //menampilan seluruh Cart user (msih cacat)
         //[Authorize]
-        //[HttpGet("Menampilkan Cart By User")]
-        //public async Task<IEnumerable<CartProdukReadDTO>> GetAllCartByUser()
-        //{
-        //    var results = await _userDAL.GetCartAll();
-        //    var ReadData = _mapper.Map<IEnumerable<CartProdukReadDTO>>(results);
-        //    return ReadData;
-        //}
+        [HttpGet("Menampilkan Cart By User")]
+        public async Task<IEnumerable<CartByUserDTO>> GetAllCartByUser()
+        {
+            var results = await _userDAL.GetCartAll();
+            var ReadData = _mapper.Map<IEnumerable<CartByUserDTO>>(results);
+            return ReadData;
+        }
 
         //LOGIN
         [HttpPost("Login")]

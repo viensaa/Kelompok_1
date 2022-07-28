@@ -19,12 +19,14 @@ namespace Kelompok_1.Profiles
             CreateMap<Transaksi, TransaksiDetailDTO>();
 
             //mapping untuk detail cart
+            CreateMap<Produk, CartByUserDTO>();
+            CreateMap<User, CartByUserDTO>();
             
-            //CreateMap<User, CartByUserDTO>();
-            ////CreateMap<Produk, CartByUserDTO>();
-            //CreateMap<Cart, ProdukCartDTO>();
-            //CreateMap<Transaksi, ProdukCartDTO>();
-            //// CreateMap<Cart, CartProdukReadDTO>();
+            CreateMap<Cart, CartByUserDTO>();
+            CreateMap<Transaksi, CartByUserDTO>();
+
+
+
         }
     }
 }
