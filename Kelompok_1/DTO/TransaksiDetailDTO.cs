@@ -6,7 +6,7 @@ namespace Kelompok_1.DTO
     {
         public int Id { get; set; }
         //public int CartId { get; set; }
-       // public Cart Cart { get; set; }
+        public CartProdukReadDTO Cart { get; set; }
         public DateTime Tanggal { get; set; }
         //public int JumlahTransaksi { get; set; }
     }

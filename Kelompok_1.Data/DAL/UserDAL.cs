@@ -63,7 +63,8 @@ namespace Kelompok_1.Data.DAL
         //belum sesaui harapan
         public async Task<IEnumerable<User>> GetTransaksiAll()
         {
-            var results = await _context.Users.Include(t => t.Transaksis).ToListAsync();
+            var results = await _context.Users.Include(t => t.Transaksis)
+                .ThenInclude(c=> c.Cart).ThenInclude(p=> p.Produk).ToListAsync();
             return results;
         }
 

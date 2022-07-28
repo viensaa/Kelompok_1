@@ -32,6 +32,8 @@ namespace Kelompok_1.Data.DAL
             throw new NotImplementedException();
         }
 
+
+        //menampilakn by Nota
         public async Task<Transaksi> GetById(int id)
         {
             var result = await _context.Transaksis.Include(u=> u.User).Include(c=> c.Cart)
