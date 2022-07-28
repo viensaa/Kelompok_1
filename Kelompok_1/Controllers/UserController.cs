@@ -112,7 +112,7 @@ namespace Kelompok_1.Controllers
             }
         }
 
-        //menampilan seluruh transaksi user(belum seusai harapan)
+        //menampilan seluruh transaksi user
         [Authorize]
         [HttpGet("Menampilkan Transaksi User")]        
         public async Task<IEnumerable<UserTransaksiDTO>> GetAllTraksaksiByUser()
@@ -121,6 +121,16 @@ namespace Kelompok_1.Controllers
             var ReadData = _mapper.Map<IEnumerable<UserTransaksiDTO>>(results);
             return ReadData;
         }
+
+        //menampilan seluruh Cart user
+        //[Authorize]
+        //[HttpGet("Menampilkan Cart By User")]
+        //public async Task<IEnumerable<CartProdukReadDTO>> GetAllCartByUser()
+        //{
+        //    var results = await _userDAL.GetCartAll();
+        //    var ReadData = _mapper.Map<IEnumerable<CartProdukReadDTO>>(results);
+        //    return ReadData;
+        //}
 
         //LOGIN
         [HttpPost("Login")]

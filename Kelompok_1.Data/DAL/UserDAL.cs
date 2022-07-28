@@ -60,7 +60,14 @@ namespace Kelompok_1.Data.DAL
             return results;
         }
 
-        //belum sesaui harapan
+        public async Task<IEnumerable<User>> GetCartAll()
+        {
+            var results = await _context.Users.Include(t => t.Transaksis)
+                .ThenInclude(c => c.Cart).ThenInclude(p => p.Produk).ToListAsync();
+            return results;
+        }
+
+        
         public async Task<IEnumerable<User>> GetTransaksiAll()
         {
             var results = await _context.Users.Include(t => t.Transaksis)
