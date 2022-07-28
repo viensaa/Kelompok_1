@@ -25,6 +25,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUser, UserDAL>();
 builder.Services.AddScoped<IKategori, KategoriDAL>();
 builder.Services.AddScoped<IProduk, ProdukDAL>();
+builder.Services.AddScoped<ICart, CartDAL>();
 
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
