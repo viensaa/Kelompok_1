@@ -65,9 +65,14 @@ namespace Kelompok_1.Data.DAL
             throw new NotImplementedException();
         }
 
-        public Task<Cart> Update(Cart obj)
+        public async Task<Cart> Update(Cart obj)
         {
-            throw new NotImplementedException();
+            var UpdatedData = await _context.Carts.FirstOrDefaultAsync(e=> e.Id == obj.Id);
+            if (UpdatedData == null) throw new Exception($"Data  dengan id {obj.Id} tidak bisa ditemukan");
+
+            UpdatedData.Jumlah = obj.Jumlah;
+            await _context.SaveChangesAsync();
+            return obj;
         }
     }
 }

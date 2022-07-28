@@ -9,6 +9,8 @@ namespace Kelompok_1.Profiles
 
         public CartProfile()
         {
+            CreateMap<CartDTO, Cart>();
+            
             CreateMap<AddExistingProdukToCartDTO, User>();
             CreateMap<AddExistingProdukToCartDTO, Cart>();
             CreateMap<AddExistingProdukToCartDTO, Produk>();

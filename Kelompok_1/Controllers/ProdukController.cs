@@ -2,11 +2,13 @@
 using Kelompok_1.Data.Interface;
 using Kelompok_1.Domain;
 using Kelompok_1.DTO;
+using Kelompok_1.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kelompok_1.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProdukController : ControllerBase
