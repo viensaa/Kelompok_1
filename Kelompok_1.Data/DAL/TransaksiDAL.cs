@@ -1,5 +1,6 @@
 ﻿using Kelompok_1.Data.Interface;
 using Kelompok_1.Domain;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace Kelompok_1.Data.DAL
 {
     public class TransaksiDAL : ITransaksi
     {
+        private readonly DataContext _context;
+
+        public TransaksiDAL(DataContext context)
+        {
+            _context = context;
+        }
         public Task<Transaksi> AddExistingCartToTransaki(Transaksi obj)
         {
             throw new NotImplementedException();
@@ -25,9 +32,15 @@ namespace Kelompok_1.Data.DAL
             throw new NotImplementedException();
         }
 
-        public Task<Transaksi> GetById(int id)
+        public async Task<Transaksi> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Transaksis.Include(u=> u.User).Include(c=> c.Cart)
+                .ThenInclude(p=> p.Produk)
+                .SingleOrDefaultAsync(u => u.Id == id);
+            if (result == null) throw new Exception($"Data Dengan Id:{id} Tidak Ditemukan");
+
+
+            return result;
         }
 
         public Task<Transaksi> Insert(Transaksi obj)

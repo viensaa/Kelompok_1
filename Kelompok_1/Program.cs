@@ -26,6 +26,7 @@ builder.Services.AddScoped<IUser, UserDAL>();
 builder.Services.AddScoped<IKategori, KategoriDAL>();
 builder.Services.AddScoped<IProduk, ProdukDAL>();
 builder.Services.AddScoped<ICart, CartDAL>();
+builder.Services.AddScoped<ITransaksi, TransaksiDAL>();
 
 // configure strongly typed settings object
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
